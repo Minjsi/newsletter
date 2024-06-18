@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 1초마다 로그 설정 파일 변화 감지 후 적용 -->
+<configuration scan="true" scanPeriod="1 seconds">
+
+    <!-- 콘솔 -->
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="console">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%X{mcd.traceId}] %msg \(%logger:%+3line\)%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- 3rd-party Loggers -->
+    <logger level="info" name="io.swagger"/>
+    <logger level="info" name="io.netty"/>
+    <logger level="info" name="org.jboss"/>
+    <logger level="info" name="org.hibernate.validator"/>
+    <logger level="info" name="org.springdoc"/>
+    <logger level="info" name="org.springframework"/>
+    <logger level="info" name="_org.springframework.web.reactive.HandlerMapping"/>
+    <logger level="info" name="reactor"/>
+
+    <!-- R2DBC Debugging -->
+    <logger level="info" name="io.r2dbc.pool"/>
+    <logger level="info" name="com.github.jasync.sql"/>
+
+    <!-- MBI -->
+    <logger level="info" name="io.happytalk.api.global.document"/>
+    <logger level="debug" name="io.happytalk.api.global.web.LoggingWebFilter"/>
+
+    <!-- 기본 Logger level, appender -->
+    <root level="debug">
+        <appender-ref ref="console"/>
+    </root>
+
+</configuration>

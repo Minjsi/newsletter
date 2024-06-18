@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="kr">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="/static/doc/rapidoc.png" rel="icon" type="image/svg+xml"/>
+    <title>RapiDoc</title>
+    <script src="rapidoc-min.js" type="module"></script>
+    <script src="rapidoc-theme.js" type="text/javascript"></script>
+</head>
+<body>
+<!-- <rapi-doc> 속성: https://rapidocweb.com/api.html -->
+<rapi-doc allow-advanced-search="false"
+          allow-spec-file-download="true"
+          default-schema-tab="schema"
+          id="thedoc"
+          render-style="focused"
+          schema-description-expanded="true"
+          schema-style="table"
+          show-components="true"
+          show-curl-before-try="true"
+          show-header="false"
+          show-method-in-nav-bar="as-colored-text"
+          sort-endpoints-by="path"
+          sort-tags="false"
+          spec-url="http://localhost:8080/docs"></rapi-doc>
+<!--
+<script>
+  // 테마 변경: https://rapidocweb.com/examples/themes.html
+  changeTheme('lightgraynav');
+</script>
+-->
+</body>
+</html>
