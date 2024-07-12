@@ -1,7 +1,7 @@
-package io.happytalk.api.domain.user.controller
+package io.newsletter.api.domain.user.controller
 
-import io.happytalk.api.domain.user.data.dto.UserResponse
-import io.happytalk.api.domain.user.service.UserService
+import io.newsletter.api.domain.user.data.dto.UserResponse
+import io.newsletter.api.domain.user.service.UserService
 import io.happytalk.api.global.document.OpenApiTags
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.GetMapping

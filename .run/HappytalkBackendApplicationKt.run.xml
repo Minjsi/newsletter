@@ -3,7 +3,7 @@
     <envs>
       <env name="SPRING_PROFILES_ACTIVE" value="local" />
     </envs>
-    <option name="MAIN_CLASS_NAME" value="io.happytalk.api.HappytalkBackendApplicationKt" />
+    <option name="MAIN_CLASS_NAME" value="io.newsletter.api.HappytalkBackendApplicationKt" />
     <module name="happytalk-backend.main" />
     <shortenClasspath name="NONE" />
     <extension name="net.ashald.envfile">

@@ -1,7 +1,7 @@
-package io.happytalk.api.domain.user.service
+package io.newsletter.api.domain.user.service
 
 
-import io.happytalk.api.domain.user.data.dto.UserResponse
+import io.newsletter.api.domain.user.data.dto.UserResponse
 import io.happytalk.api.global.repository.cud.UserRepository
 import org.springframework.stereotype.Service
 

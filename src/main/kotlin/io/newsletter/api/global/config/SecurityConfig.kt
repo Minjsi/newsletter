@@ -1,9 +1,9 @@
 package io.newsletter.api.global.config
 
-import io.happytalk.api.global.data.properties.CorsProperties
-import io.happytalk.api.global.web.LoggingWebFilter
-import io.happytalk.api.global.web.SecurityContextRepository
-import io.happytalk.api.global.web.SecurityExceptionHandler
+import io.newsletter.api.global.data.properties.CorsProperties
+import io.newsletter.api.global.web.LoggingWebFilter
+import io.newsletter.api.global.web.SecurityContextRepository
+import io.newsletter.api.global.web.SecurityExceptionHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod

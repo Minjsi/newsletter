@@ -1,4 +1,4 @@
-package io.happytalk.api.domain.user.data.dto
+package io.newsletter.api.domain.user.data.dto
 
 data class UserResponse(
     val username: String,

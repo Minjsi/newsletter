@@ -1,6 +1,6 @@
 package io.newsletter.api.global.config
 
-import io.happytalk.api.global.support.MbiSecretJasypt
+import io.newsletter.api.global.support.MbiSecretJasypt
 import io.github.cdimascio.dotenv.Dotenv
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -23,6 +23,6 @@ class MbiSecretConfig {
     @Bean
     fun dotenv(): Dotenv {
 
-        return io.happytalk.api.global.support.Dotenv.instance()
+        return io.newsletter.api.global.support.Dotenv.instance()
     }
 }

@@ -1,12 +1,6 @@
 @file:Suppress("SpellCheckingInspection")
 
-import nu.studer.gradle.jooq.JooqEdition
-import nu.studer.gradle.jooq.JooqGenerate
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jooq.meta.jaxb.GeneratedSerialVersionUID
-import org.jooq.meta.jaxb.Logging
-import org.jooq.meta.jaxb.OnError
-import org.jooq.meta.jaxb.Property
 
 plugins {
     val kotlinVersion = System.getProperty("kotlinVersion")
@@ -19,7 +13,6 @@ plugins {
 
     id("org.springframework.boot") version springBootVersion
     id("io.spring.dependency-management") version "1.1.0"
-    id("nu.studer.jooq") version "8.2.1"
 }
 
 group = "io.happytalk"
@@ -31,7 +24,6 @@ val springBootVersion = System.getProperty("springBootVersion")!!
 val coroutineVersion = project.properties["coroutineVersion"]
 val lombokVersion = project.properties["lombokVersion"]
 val reactorVersion = project.properties["reactorVersion"]
-val jooqVersion = project.properties["jooqVersion"]
 
 configurations {
     all {
@@ -53,8 +45,7 @@ sourceSets {
     named("main") {
         java {
             srcDirs(
-                layout.buildDirectory.dir("src/main").get().asFile,
-                layout.buildDirectory.dir("generated/jooq").get().asFile
+                "$buildDir/src/main",
             )
         }
     }
@@ -117,12 +108,6 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("me.paulschwarz:spring-dotenv:4.0.0")
 
-    // jOOQ
-    implementation("org.springframework.boot:spring-boot-starter-jooq")
-    implementation("org.jooq:jooq:$jooqVersion")
-    // jOOQ 코드 생성시에만 JDBC 사용 (실제 어플리케이션 에서는 R2DBC 사용됨)
-    jooqGenerator("mysql:mysql-connector-java:8.0.32")
-
     // OpenAPI Documentation
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.2.0")
 
@@ -141,61 +126,6 @@ kapt {
     keepJavacAnnotationProcessors = true
 }
 
-jooq {
-
-    version.set("$jooqVersion")  // default (can be omitted)
-    edition.set(JooqEdition.OSS)  // default (can be omitted)
-
-    configurations {
-        create("main") {  // name of the jOOQ configuration
-            generateSchemaSourceOnCompilation.set(true)  // default (can be omitted)
-
-            jooqConfiguration.apply {
-
-                logging = Logging.WARN
-                onError = OnError.FAIL
-
-                // 빌드 파이프라인에서 접근할 수 있는 DB 필요
-                // > 때문에 개발 DB 와 운영 DB 스키마 차이가 발생하면 빌드단계에서 부터 failure
-                // > 배포 후 runtime 시 failture 발생하는것 보다 안전
-                jdbc.apply {
-                    driver = "com.mysql.cj.jdbc.Driver"
-                    url = "jdbc:mysql://127.0.0.1:3306/example_db"
-                    user = "root"
-                    password = "1234"
-                    properties.add(Property().apply {
-                        key = "ssl"
-                        value = "true"
-                    })
-                }
-                generator.apply {
-                    name = "org.jooq.codegen.KotlinGenerator"
-                    database.apply {
-                        name = "org.jooq.meta.mysql.MySQLDatabase"
-                        inputSchema = "example_db"
-                        includes = ".*"
-                        excludes = "test_.* | temp_.*"
-                        withUnsignedTypes(false)
-                    }
-                    generate.apply {
-                        generatedSerialVersionUID = GeneratedSerialVersionUID.CONSTANT
-                        isJavaTimeTypes = true
-                        isDeprecated = false
-                        isRecords = true
-                        isImmutablePojos = true
-                        isFluentSetters = true
-                    }
-                    target.apply {
-                        packageName = "io.happytalk.jooq"
-                        directory = "src/generated/jooq"
-                    }
-                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
-                }
-            }
-        }
-    }
-}
-
 tasks.bootRun {
     systemProperty("spring.profiles.active", "local")
 }
@@ -209,9 +139,4 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-// participate in incremental builds and build caching
-tasks.named<JooqGenerate>("generateJooq") {
-    allInputsDeclared.set(true)
 }

@@ -1,4 +1,4 @@
-package io.happytalk.api
+package io.newsletter.api
 
 import io.happytalk.api.global.support.FullBeanNameGenerator
 import io.happytalk.api.global.util.LogUtils
